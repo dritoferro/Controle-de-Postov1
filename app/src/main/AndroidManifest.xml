@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="tagliaferro.adriano.projetoposto">
+
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/iconposto"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Inc_Alt_Abast" android:parentActivityName=".Abast"
+            android:screenOrientation="portrait"/>
+       <activity android:name=".IncAltVeiculo" android:parentActivityName=".Abast"
+           android:screenOrientation="portrait"/>
+        <activity android:name=".ExcVeiculo" android:parentActivityName=".Abast"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Inc_Alt_Posto" android:parentActivityName=".Abast"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Abast"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ExcPosto" android:parentActivityName=".Abast"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Choose_Veiculo" android:parentActivityName=".Abast"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Alt_Posto" android:parentActivityName=".Abast"
+            android:screenOrientation="portrait"/>
+
+    </application>
+
+</manifest>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingBottom="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lblComb1"
+            android:paddingTop="20dp"
+            android:id="@+id/textView19"/>
+
+        <Spinner
+            android:layout_width="144dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/spComb1"
+            android:layout_alignTop="@+id/textView19"
+            android:layout_toEndOf="@+id/textView19" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lblPreco"
+            android:id="@+id/textView20"
+            android:layout_below="@+id/txtComb1"
+            android:layout_alignStart="@+id/textView19"
+            />
+
+        <EditText
+            android:layout_width="139dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:id="@+id/txtComb1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lblComb2"
+            android:layout_marginTop="10dp"/>
+
+        <Spinner
+            android:layout_width="144dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/spComb2"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lblPreco"/>
+
+        <EditText
+            android:layout_width="139dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtComb2"
+            android:inputType="numberDecimal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lblComb3"
+            android:layout_marginTop="10dp"/>
+
+        <Spinner
+            android:layout_width="144dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/spComb3"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lblPreco"/>
+
+        <EditText
+            android:layout_width="139dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtComb3"
+            android:inputType="numberDecimal" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/save"
+            android:id="@+id/btnSavePosto"
+            android:layout_marginLeft="30dp"
+            android:onClick="savePosto"/>
+
+    </LinearLayout>
+</ScrollView>

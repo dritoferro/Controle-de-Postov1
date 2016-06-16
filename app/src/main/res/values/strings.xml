@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">Controle de Posto</string>
+    <string name="lblLogin">Bem Vindo ao Controle de Posto</string>
+    <string name="lblEntrar">Entrar</string>
+    <string name="lblValor">Valor:</string>
+    <string name="lblPosto">Posto:</string>
+    <string name="lblKm">Km no Ato:</string>
+    <string name="lblSalvar">Salvar</string>
+    <string name="title_activity_inc_alt_veiculo">IncAltVeiculo</string>
+    <string name="lblNome">Nome:</string>
+    <string name="lblCat">Categoria:</string>
+    <string name="lblComb">Combustível:</string>
+    <string name="ExcVeic">Quando excluir um veículo, os registros de abastecimento do mesmo também serão excluídos !</string>
+    <string name="ExcPosto">Quando excluir um posto, os registros de abastecimento no mesmo também serão excluídos !</string>
+    <string name="selectVeic">Selecione o veículo que deseja excluir:</string>
+    <string name="selectPosto">Selecione o posto que deseja excluir:</string>
+    <string name="lblComb1">Combustível 1:</string>
+    <string name="lblComb2">Combustível 2:</string>
+    <string name="lblComb3">Combustível 3:</string>
+    <string name="lblPreco">Preço por Litro/m³:</string>
+    <string name="InsVec">Cadastrar Veículo</string>
+    <string name="AltVec">Atualizar Veículo</string>
+    <string name="DelVec">Excluir Veículo</string>
+    <string name="EscVec">Escolher Veículo</string>
+    <string name="InsPosto">Cadastrar Posto</string>
+    <string name="AltPosto">Atualizar Posto</string>
+    <string name="ExcPosto2">Excluir Posto</string>
+    <string name="chooseVec">Escolha seu veículo</string>
+    <string name="lblVeiculo">Veículo:</string>
+    <string name="excSucess">Excluído com sucesso!</string>
+    <string name="askDelete">Você deseja apagar este registro ?</string>
+    <string name="askAltInc">Nenhum posto cadastrado possui o combustível deste veículo, deseja alterar ou criar um novo posto ?</string>
+    <string name="includeSucess">Incluído com sucesso !</string>
+    <string name="updateSucess">Atualizado com sucesso !</string>
+    <string name="warning">Aviso</string>
+    <string name="warnAltPosto">Digite o nome do Posto que deseja alterar:</string>
+    <string name="putVecInfo">Informe os dados do veículo</string>
+    <string name="tip1_posto">Cadastre o seu posto, informando o combustível do seu veículo e o valor do litro</string>
+    <string name="tip2_veiculo">Cadastre o seu veiculo informando um nome/apelido, a categoria e o combustível</string>
+    <string name="tip3_abas">Cadastre um abastecimento selecionando um dia no calendário até o dia atual</string>
+    <string-array name="tiposComb" >
+        <item>Selecione</item>
+        <item>Etanol</item>
+        <item>Gasolina</item>
+        <item>Gasolina Aditivada</item>
+        <item>Gás Natural</item>
+        <item>Diesel</item>
+        <item>Biodiesel</item>
+    </string-array>
+    <string-array name="catVec">
+        <item>Selecione</item>
+        <item>Carro</item>
+        <item>Jeep</item>
+        <item>SUV</item>
+        <item>Moto</item>
+        <item>Ônibus</item>
+        <item>Micro Ônibus</item>
+        <item>Van</item>
+        <item>Caminhão</item>
+        <item>Carreta</item>
+    </string-array>
+</resources>

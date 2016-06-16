@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:id="@+id/Veiculos">
+
+    <item android:id="@+id/actInsVec"
+        android:title="@string/InsVec"
+        android:icon="@android:drawable/ic_menu_camera"
+        app:showAsAction="ifRoom|withText"/>
+
+    <item android:id="@+id/actAltVec"
+        android:title="@string/AltVec"
+        android:icon="@android:drawable/ic_menu_add"
+        app:showAsAction="ifRoom|withText"/>
+
+    <item android:id="@+id/actDelVec"
+        android:title="@string/DelVec"
+        android:icon="@android:drawable/ic_menu_agenda"
+        app:showAsAction="ifRoom|withText"/>
+
+    <item android:id="@+id/actChooseVec"
+        android:title="@string/EscVec"
+        android:icon="@android:drawable/ic_menu_call"
+        app:showAsAction="ifRoom|withText"/>
+
+    </group>
+
+    <group android:id="@+id/Postos" android:menuCategory="alternative">
+
+        <item android:id="@+id/actInsPosto"
+            android:title="@string/InsPosto"
+            android:icon="@android:drawable/ic_menu_directions"
+            app:showAsAction="ifRoom|withText"/>
+
+        <item android:id="@+id/actAltPosto"
+            android:title="@string/AltPosto"
+            android:icon="@android:drawable/ic_menu_gallery"
+            app:showAsAction="ifRoom|withText"/>
+
+        <item android:id="@+id/actExcPosto"
+            android:title="@string/ExcPosto2"
+            android:icon="@android:drawable/ic_menu_delete"
+            app:showAsAction="ifRoom|withText"/>
+
+    </group>
+</menu>
