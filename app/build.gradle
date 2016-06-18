@@ -4,9 +4,9 @@ android {
     signingConfigs {
         config {
             keyAlias 'keystore.jks'
-            keyPassword 'adriano300695'
+            keyPassword 'Adriano300695'
             storeFile file('C:/ProjetosAndroid/KeyStore/keystore.jks')
-            storePassword '300695'
+            storePassword 'Adriano300695'
         }
     }
     compileSdkVersion 23
@@ -15,8 +15,8 @@ android {
         applicationId "tagliaferro.adriano.projetoposto"
         minSdkVersion 21
         targetSdkVersion 23
-        versionCode 3
-        versionName "1.2"
+        versionCode 4
+        versionName "1.3"
         signingConfig signingConfigs.config
     }
     buildTypes {

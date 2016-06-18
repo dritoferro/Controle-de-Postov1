@@ -52,6 +52,7 @@ public class Inc_Alt_Abast extends AppCompatActivity implements DialogInterface.
     private Double kmInit = -1.0, kmFinal = -1.0, valorL = 0.0;
     private String postoSp;
     ActionBar bar;
+    Posto novoPosto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,35 +143,33 @@ public class Inc_Alt_Abast extends AppCompatActivity implements DialogInterface.
             try {
                 Double vl = Double.parseDouble(precoL.getText().toString());
                 a = new Abastecimento(data, val, posto, km, vec, vl);
-                if(vl != valorL){
-                    Posto postoUp = new Posto();
-                    if(posComb == 1){
-                        postoUp.setComb1(combustivel);
-                        postoUp.setVal1(vl);
-                    } else if(posComb == 2){
-                        postoUp.setComb2(combustivel);
-                        postoUp.setVal2(vl);
-                    } else if(posComb == 3){
-                        postoUp.setComb3(combustivel);
-                        postoUp.setVal3(vl);
-                    }
-                    postoUp.setId(idPosto);
-                    postoUp.setNome(posto);
-                    posDAO.update(postoUp);
 
-                }
             } catch (Exception e) {
                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
             }
         } else {
-            Double vl = 0.0;
-            List<Abastecimento> listaVl = abasDAO.listAbas(vec);
-            for (int i = 0; i < listaVl.size(); i++) {
-                if (id == listaVl.get(i).getId()) {
-                    vl = listaVl.get(i).getPrecoL();
+            try {
+                Double vl = Double.parseDouble(precoL.getText().toString());
+                if(vl != valorL){
+
+                    if(posComb == 1){
+                        novoPosto.setComb1(combustivel);
+                        novoPosto.setVal1(vl);
+                    } else if(posComb == 2){
+                        novoPosto.setComb2(combustivel);
+                        novoPosto.setVal2(vl);
+                    } else if(posComb == 3){
+                        novoPosto.setComb3(combustivel);
+                        novoPosto.setVal3(vl);
+                    }
+                    posDAO.update(novoPosto);
+                    a = new Abastecimento(data, val, posto, km, vec, vl);
                 }
+
+            }catch (Exception e){
+                throw new RuntimeException(e.getMessage());
             }
-            a = new Abastecimento(data, val, posto, km, vec, vl);
+
         }
 
 
@@ -372,7 +371,7 @@ public class Inc_Alt_Abast extends AppCompatActivity implements DialogInterface.
 
     public Double pegaPreco(String postoAt) {
         Double p = 0.0;
-        Posto novoPosto = posDAO.listPosNome(postoAt);
+        novoPosto = posDAO.listPosNome(postoAt);
         if (novoPosto.getComb1().equals(combustivel)) {
             p = novoPosto.getVal1();
             posComb = 1;
