@@ -32,13 +32,14 @@ import tagliaferro.adriano.projetoposto.Data.Veiculo;
  * Created by Adriano on 25/01/2016.
  */
 public class Inc_Alt_Abast extends AppCompatActivity implements DialogInterface.OnClickListener {
+
     private EditText dataAbast;
     private EditText valorAbast;
     private EditText kmAbast;
     private EditText precoL;
     private Spinner postoAbast;
     private String vec, posto, combustivel;
-    private int id, positionP = -1;
+    private int id, positionP = -1, posComb, idPosto;
     Intent i;
     PosDAO posDAO;
     VeicDAO veicDAO;
@@ -48,7 +49,7 @@ public class Inc_Alt_Abast extends AppCompatActivity implements DialogInterface.
     ArrayAdapter<String> adapter;
     TextView lblExcPosto;
     private boolean deleted = false;
-    private Double kmInit = -1.0, kmFinal = -1.0;
+    private Double kmInit = -1.0, kmFinal = -1.0, valorL = 0.0;
     private String postoSp;
     ActionBar bar;
 
@@ -141,6 +142,23 @@ public class Inc_Alt_Abast extends AppCompatActivity implements DialogInterface.
             try {
                 Double vl = Double.parseDouble(precoL.getText().toString());
                 a = new Abastecimento(data, val, posto, km, vec, vl);
+                if(vl != valorL){
+                    Posto postoUp = new Posto();
+                    if(posComb == 1){
+                        postoUp.setComb1(combustivel);
+                        postoUp.setVal1(vl);
+                    } else if(posComb == 2){
+                        postoUp.setComb2(combustivel);
+                        postoUp.setVal2(vl);
+                    } else if(posComb == 3){
+                        postoUp.setComb3(combustivel);
+                        postoUp.setVal3(vl);
+                    }
+                    postoUp.setId(idPosto);
+                    postoUp.setNome(posto);
+                    posDAO.update(postoUp);
+
+                }
             } catch (Exception e) {
                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
             }
@@ -357,11 +375,16 @@ public class Inc_Alt_Abast extends AppCompatActivity implements DialogInterface.
         Posto novoPosto = posDAO.listPosNome(postoAt);
         if (novoPosto.getComb1().equals(combustivel)) {
             p = novoPosto.getVal1();
+            posComb = 1;
         } else if (novoPosto.getComb2().equals(combustivel)) {
             p = novoPosto.getVal2();
+            posComb = 2;
         } else if (novoPosto.getComb3().equals(combustivel)) {
             p = novoPosto.getVal3();
+            posComb = 3;
         }
+        valorL = p;
+        idPosto = novoPosto.getId();
         return p;
     }
 }

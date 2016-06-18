@@ -19,7 +19,7 @@ public class MainActivity extends Activity {
     PosDAO posDAO;
     VeicDAO veicDAO;
     static final int REQ_COD = 100;
-    int a;
+
 
 
     @Override
