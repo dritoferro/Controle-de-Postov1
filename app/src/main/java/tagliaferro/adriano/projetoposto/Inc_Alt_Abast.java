@@ -264,52 +264,106 @@ public class Inc_Alt_Abast extends AppCompatActivity implements DialogInterface.
                             kmInit = 0.0;
                             kmFinal = 0.0;
                         }
-                    }
-                } else {
-                    for (int i = 0; i < list2.size(); i++) {
-                        dia = getDiaList(list2.get(i).getData());
-                        if (today < dia) {
-                            if (i == 1) {
-                                if (today == getDiaList(list2.get(i - 1).getData())) {
-                                    kmInit = 0.0;
-                                    kmFinal = list2.get(i).getKm();
+                    } else {
+                        for (int i = 0; i < list2.size(); i++) {
+                            dia = getDiaList(list2.get(i).getData());
+                            if (today < dia) {
+                                if (i == 1) {
+                                    if (today == getDiaList(list2.get(i - 1).getData())) {
+                                        kmInit = 0.0;
+                                        kmFinal = list2.get(i).getKm();
+                                    } else {
+                                        kmFinal = list2.get(i).getKm();
+                                        kmInit = list2.get(i - 1).getKm();
+                                    }
                                 } else {
                                     kmFinal = list2.get(i).getKm();
-                                    kmInit = list2.get(i - 1).getKm();
+                                    if ((i - 1) >= 0) {
+                                        kmInit = list2.get(i - 2).getKm();
+                                    } else {
+                                        List<Abastecimento> listFull = abasDAO.listAbas(vec);
+                                        if (listFull.size() != list2.size()) {
+                                            List<Abastecimento> listFullOrdered = listAbast.ordAbast(listFull);
+                                            kmInit = listFull.get(listFullOrdered.size() - 1).getKm();
+                                        } else {
+                                            kmInit = 0.0;
+                                        }
+                                    }
                                 }
-                            } else {
-                                kmFinal = list2.get(i).getKm();
-                                if ((i - 1) >= 0) {
-                                    kmInit = list2.get(i - 1).getKm();
-                                } else {
+                                break;
+                            }
+                            if (today == dia) {
+                                if (id < list2.get(i).getId()) {
                                     List<Abastecimento> listFull = abasDAO.listAbas(vec);
                                     if (listFull.size() != list2.size()) {
                                         List<Abastecimento> listFullOrdered = listAbast.ordAbast(listFull);
-                                        kmInit = listFull.get(listFullOrdered.size() - 1).getKm();
+                                        kmInit = listFullOrdered.get(listFullOrdered.size() - 1).getKm();
                                     } else {
                                         kmInit = 0.0;
                                     }
+                                    kmFinal = list2.get(i).getKm();
+                                }
+                                if ((i + 1) == list2.size()) {
+                                    kmInit = list2.get(list2.size() - 2).getKm();
+                                    kmFinal = 0.0;
                                 }
                             }
-                            break;
-                        }
-                        if (today == dia) {
-                            if (id < list2.get(i).getId()) {
-                                List<Abastecimento> listFull = abasDAO.listAbas(vec);
-                                if (listFull.size() != list2.size()) {
-                                    List<Abastecimento> listFullOrdered = listAbast.ordAbast(listFull);
-                                    kmInit = listFull.get(listFullOrdered.size() - 1).getKm();
-                                } else {
-                                    kmInit = 0.0;
-                                }
-                                kmFinal = list2.get(i).getKm();
-                            }
-                            if ((i + 1) == list2.size()) {
-                                kmInit = list2.get(list2.size() - 2).getKm();
-                                kmFinal = 0.0;
-                            }
-                        }
 
+                        }
+                    }
+                } else {
+                    if(list2.size() != 1) {
+                        for (int i = 0; i < list2.size(); i++) {
+                            dia = getDiaList(list2.get(i).getData());
+                            if (today < dia) {
+                                if (i == 1) {
+                                    if (today == getDiaList(list2.get(i - 1).getData())) {
+                                        kmInit = 0.0;
+                                        kmFinal = list2.get(i).getKm();
+                                    } else {
+                                        kmFinal = list2.get(i).getKm();
+                                        kmInit = list2.get(i - 1).getKm();
+                                    }
+                                } else {
+                                    kmFinal = list2.get(i).getKm();
+                                    if ((i - 1) >= 0) {
+                                        kmInit = list2.get(i - 1).getKm();
+                                    } else {
+                                        List<Abastecimento> listFull = abasDAO.listAbas(vec);
+                                        if (listFull.size() != list2.size()) {
+                                            List<Abastecimento> listFullOrdered = listAbast.ordAbast(listFull);
+                                            kmInit = listFull.get(listFullOrdered.size() - 1).getKm();
+                                        } else {
+                                            kmInit = 0.0;
+                                        }
+                                    }
+                                }
+                                break;
+                            }
+                            if (today == dia) {
+                                kmInit = list2.get(i).getKm();
+                                if((i + 1) < list2.size()){
+                                    kmFinal = list2.get(i + 1).getKm();
+                                } else {
+                                    kmFinal = 0.0;
+                                }
+                                /*if (id < list2.get(i).getId()) {
+                                    List<Abastecimento> listFull = abasDAO.listAbas(vec);
+                                    if (listFull.size() != list2.size()) {
+                                        List<Abastecimento> listFullOrdered = listAbast.ordAbast(listFull);
+                                        kmInit = listFullOrdered.get(listFullOrdered.size() - 1).getKm();
+                                    } else {
+                                        kmInit = 0.0;
+                                    }
+                                    kmFinal = list2.get(i).getKm();
+                                }
+                                if ((i + 1) == list2.size()) {
+                                    kmInit = list2.get(list2.size() - 2).getKm();
+                                    kmFinal = 0.0;
+                                }*/
+                            }
+
+                        }
                     }
                 }
                 if (kmFinal == -1.0) {
@@ -318,8 +372,9 @@ public class Inc_Alt_Abast extends AppCompatActivity implements DialogInterface.
                 }
             } else {
                 List<Abastecimento> listFull = abasDAO.listAbas(vec);
-                if (listFull.size() != 0) {
-                    kmInit = listFull.get(listFull.size() - 1).getKm();
+                List<Abastecimento> listFullOrdered = listAbast.ordAbast(listFull);
+                if (listFullOrdered.size() != 0) {
+                    kmInit = listFullOrdered.get(listFull.size() - 1).getKm();
                     kmFinal = 0.0;
                 } else {
                     kmFinal = 0.0;
