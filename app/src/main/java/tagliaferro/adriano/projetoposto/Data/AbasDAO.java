@@ -4,15 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Currency;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
-
-import tagliaferro.adriano.projetoposto.Abast;
 
 /**
  * Created by Adriano on 08/02/2016.
@@ -91,7 +85,7 @@ public class AbasDAO {
 
     }
 
-    public String topAbas(List<Veiculo> veic) {
+    /*public String topAbas(List<Veiculo> veic) {
 
 
         String[] columns = {AbastecimentoContract.Columns._IDABS,
@@ -133,7 +127,7 @@ public class AbasDAO {
             }
         }
         return null;
-    }
+    }*/
 
     private static Abastecimento fromCursor(Cursor c) {
         int id = c.getInt(c.getColumnIndex(AbastecimentoContract.Columns._IDABS));
@@ -148,8 +142,8 @@ public class AbasDAO {
 
     public void save(Abastecimento abs, Context context) {
 
-        Veiculo veiculo = new Veiculo();
-        Posto posto = new Posto();
+        Veiculo veiculo;
+        Posto posto;
         VeicDAO veicDAO = VeicDAO.getInstance(context);
         PosDAO posDAO = PosDAO.getInstance(context);
         veiculo = veicDAO.listVeicComb(abs.getVeiculo());
@@ -187,7 +181,7 @@ public class AbasDAO {
         values.put(AbastecimentoContract.Columns.KMABS, abs.getKm());
         values.put(AbastecimentoContract.Columns.PRECOL, abs.getPrecoL());
 
-        int ret = db.update(AbastecimentoContract.TABLE_NAME_ABS, values, AbastecimentoContract.Columns._IDABS + " = ?", new String[]{String.valueOf(abs.getId())});
+        db.update(AbastecimentoContract.TABLE_NAME_ABS, values, AbastecimentoContract.Columns._IDABS + " = ?", new String[]{String.valueOf(abs.getId())});
 
     }
 
@@ -196,19 +190,19 @@ public class AbasDAO {
         ContentValues values = new ContentValues();
         values.put(AbastecimentoContract.Columns.VEICULO, novNome);
 
-        int ret = db.update(AbastecimentoContract.TABLE_NAME_ABS, values, AbastecimentoContract.Columns.VEICULO + " = ?", new String[]{antNome});
+        db.update(AbastecimentoContract.TABLE_NAME_ABS, values, AbastecimentoContract.Columns.VEICULO + " = ?", new String[]{antNome});
 
     }
 
     public void delete(int abs) {
 
-        int ret = db.delete(AbastecimentoContract.TABLE_NAME_ABS, AbastecimentoContract.Columns._IDABS + " = ?", new String[]{String.valueOf(abs)});
+        db.delete(AbastecimentoContract.TABLE_NAME_ABS, AbastecimentoContract.Columns._IDABS + " = ?", new String[]{String.valueOf(abs)});
 
     }
 
     public void deleteByVec(String name) {
 
-        int ret = db.delete(AbastecimentoContract.TABLE_NAME_ABS, AbastecimentoContract.Columns.VEICULO + " = ?", new String[]{name});
+        db.delete(AbastecimentoContract.TABLE_NAME_ABS, AbastecimentoContract.Columns.VEICULO + " = ?", new String[]{name});
 
     }
 
@@ -220,6 +214,7 @@ public class AbasDAO {
         if (c.moveToNext()) {
             return c.getString(c.getColumnIndex(AbastecimentoContract.Columns.VEICULO));
         }
+        c.close();
         return null;
     }
 }

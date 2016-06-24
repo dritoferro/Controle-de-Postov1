@@ -39,7 +39,7 @@ public class Inc_Alt_Abast extends AppCompatActivity implements DialogInterface.
     private EditText precoL;
     private Spinner postoAbast;
     private String vec, posto, combustivel;
-    private int id, positionP = -1, posComb, idPosto;
+    private int id, positionP = -1, posComb;
     Intent i;
     PosDAO posDAO;
     VeicDAO veicDAO;
@@ -47,9 +47,9 @@ public class Inc_Alt_Abast extends AppCompatActivity implements DialogInterface.
     ListAbast listAbast;
     Alt_Posto altPosto;
     ArrayAdapter<String> adapter;
-    TextView lblExcPosto;
+    TextView lblExcPosto, lblExcPreco;
     private boolean deleted = false;
-    private Double kmInit = -1.0, kmFinal = -1.0, valorL = 0.0;
+    private Double kmInit = -1.0, kmFinal = -1.0, valorL = 0.0, precoAntigo = 0.0;
     private String postoSp;
     ActionBar bar;
     Posto novoPosto;
@@ -64,11 +64,13 @@ public class Inc_Alt_Abast extends AppCompatActivity implements DialogInterface.
             bar.setDisplayHomeAsUpEnabled(true);
         }
 
+        precoL = (EditText) findViewById(R.id.txtPreco);
         dataAbast = (EditText) findViewById(R.id.txtData);
         valorAbast = (EditText) findViewById(R.id.txtValor);
         kmAbast = (EditText) findViewById(R.id.txtKm);
         postoAbast = (Spinner) findViewById(R.id.spPosto);
         lblExcPosto = (TextView) findViewById(R.id.lblPostoExcluded);
+        lblExcPreco = (TextView) findViewById(R.id.lblPrecoExcluded);
         posDAO = PosDAO.getInstance(this);
         veicDAO = VeicDAO.getInstance(this);
         abasDAO = AbasDAO.getInstance(this);
@@ -77,7 +79,7 @@ public class Inc_Alt_Abast extends AppCompatActivity implements DialogInterface.
 
         dataAbast.setEnabled(false);
         i = getIntent();
-        Bundle d = new Bundle();
+        Bundle d;
         d = i.getExtras();
         vec = d.getString(AbastecimentoContract.Columns.VEICULO);
         loadAdapter();
@@ -109,10 +111,17 @@ public class Inc_Alt_Abast extends AppCompatActivity implements DialogInterface.
                 postoAbast.setSelection(positionP);
                 deleted = false;
                 postoSp = postoAbast.getSelectedItem().toString();
+                valorL = precoAnt();
+                precoL.setText(String.valueOf(valorL));
             } else {
                 postoAbast.setVisibility(View.INVISIBLE);
                 lblExcPosto.setText(d.getString(AbastecimentoContract.Columns.POSTOABS));
                 lblExcPosto.setVisibility(View.VISIBLE);
+                precoL.setVisibility(View.INVISIBLE);
+                lblExcPreco.setText(String.valueOf(d.getDouble(AbastecimentoContract.Columns.PRECOL)));
+                lblExcPreco.setVisibility(View.VISIBLE);
+                postoSp = d.getString(AbastecimentoContract.Columns.POSTOABS);
+
                 deleted = true;
             }
         }
@@ -150,23 +159,25 @@ public class Inc_Alt_Abast extends AppCompatActivity implements DialogInterface.
         } else {
             try {
                 Double vl = Double.parseDouble(precoL.getText().toString());
-                if(vl != valorL){
+                if (!(valorL.equals(vl))) {
 
-                    if(posComb == 1){
+                    if (posComb == 1) {
                         novoPosto.setComb1(combustivel);
                         novoPosto.setVal1(vl);
-                    } else if(posComb == 2){
+                    } else if (posComb == 2) {
                         novoPosto.setComb2(combustivel);
                         novoPosto.setVal2(vl);
-                    } else if(posComb == 3){
+                    } else if (posComb == 3) {
                         novoPosto.setComb3(combustivel);
                         novoPosto.setVal3(vl);
                     }
                     posDAO.update(novoPosto);
                     a = new Abastecimento(data, val, posto, km, vec, vl);
+                } else {
+                    a = new Abastecimento(data, val, posto, km, vec, valorL);
                 }
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 throw new RuntimeException(e.getMessage());
             }
 
@@ -226,7 +237,7 @@ public class Inc_Alt_Abast extends AppCompatActivity implements DialogInterface.
 
     public void loadAdapter() {
         combustivel = veicDAO.listVeicComb(vec).getComb();
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, posDAO.listPosByVec(veicDAO.listVeicComb(vec)));
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, posDAO.listPosByVec(veicDAO.listVeicComb(vec)));
     }
 
     @Override
@@ -312,7 +323,7 @@ public class Inc_Alt_Abast extends AppCompatActivity implements DialogInterface.
                         }
                     }
                 } else {
-                    if(list2.size() != 1) {
+                    if (list2.size() != 1) {
                         for (int i = 0; i < list2.size(); i++) {
                             dia = getDiaList(list2.get(i).getData());
                             if (today < dia) {
@@ -332,7 +343,11 @@ public class Inc_Alt_Abast extends AppCompatActivity implements DialogInterface.
                                         List<Abastecimento> listFull = abasDAO.listAbas(vec);
                                         if (listFull.size() != list2.size()) {
                                             List<Abastecimento> listFullOrdered = listAbast.ordAbast(listFull);
-                                            kmInit = listFull.get(listFullOrdered.size() - 1).getKm();
+                                            if((listFullOrdered.size() - 3) >= 0 ) {
+                                                kmInit = listFull.get(listFullOrdered.size() - 3).getKm();
+                                            } else {
+                                                kmInit = 0.0;
+                                            }
                                         } else {
                                             kmInit = 0.0;
                                         }
@@ -342,7 +357,7 @@ public class Inc_Alt_Abast extends AppCompatActivity implements DialogInterface.
                             }
                             if (today == dia) {
                                 kmInit = list2.get(i).getKm();
-                                if((i + 1) < list2.size()){
+                                if ((i + 1) < list2.size()) {
                                     kmFinal = list2.get(i + 1).getKm();
                                 } else {
                                     kmFinal = 0.0;
@@ -408,13 +423,21 @@ public class Inc_Alt_Abast extends AppCompatActivity implements DialogInterface.
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
-        precoL = (EditText) findViewById(R.id.txtPreco);
+
 
         postoAbast.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Double preco = pegaPreco(parent.getSelectedItem().toString());
-                precoL.setText(String.valueOf(preco));
+                Double preco;
+                if (i.getFlags() == 1) {
+                    preco = pegaPreco(parent.getSelectedItem().toString());
+                    precoL.setText(String.valueOf(preco));
+                } else if (i.getFlags() == 2 && (!postoSp.equals(parent.getSelectedItem().toString()))) {
+                    preco = pegaPreco(parent.getSelectedItem().toString());
+                    precoL.setText(String.valueOf(preco));
+                } else {
+                    precoL.setText(String.valueOf(precoAntigo));
+                }
             }
 
             @Override
@@ -438,7 +461,21 @@ public class Inc_Alt_Abast extends AppCompatActivity implements DialogInterface.
             posComb = 3;
         }
         valorL = p;
-        idPosto = novoPosto.getId();
+        return p;
+    }
+
+    public Double precoAnt() {
+        Double p = 0.0;
+        int idProvi;
+        List<Abastecimento> abastList = abasDAO.listAbas(vec);
+        for (int i = 0; i < abastList.size(); i++) {
+            idProvi = abastList.get(i).getId();
+            if(idProvi == id){
+                p = abastList.get(i).getPrecoL();
+                break;
+            }
+        }
+        precoAntigo = p;
         return p;
     }
 }

@@ -304,11 +304,4 @@ public class Abast extends AppCompatActivity {
         }
     }
 
-    public TextView getTxtVeic() {
-        return txtVeic;
-    }
-
-    public void setTxtVeic(TextView txtVeic) {
-        this.txtVeic = txtVeic;
-    }
 }
